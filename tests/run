@@ -42,6 +42,7 @@ function test()
     }
     else
     {
+        var_dump($records2);
         exit($status['exitcode'] ?? 0);
     }
 }
