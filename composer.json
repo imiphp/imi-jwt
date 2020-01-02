@@ -1,0 +1,27 @@
+{
+    "name": "imiphp/imi-jwt",
+    "type": "library",
+    "license": "MIT",
+    "description": "在 imi 框架中非常方便地接入 jwt",
+    "require": {
+        "lcobucci/jwt": "3.3.*"
+    },
+    "require-dev": {
+        "yurunsoft/imi": "dev-dev",
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Imi\\JWT\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4" : {
+            "Imi\\JWT\\Test\\" : "tests/"
+        }
+    },
+    "scripts": {
+      "test": "./tests/run",
+      "install-test": "php --ri swoole && composer install composer test"
+    }
+}
