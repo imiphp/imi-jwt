@@ -10,7 +10,7 @@
          stopOnFailure="false">
     <testsuites>
         <testsuite name="JWT">
-            <directory>unit</directory>
+            <directory>Unit</directory>
             <file>*.php</file>
         </testsuite>
     </testsuites>
