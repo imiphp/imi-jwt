@@ -157,9 +157,9 @@ class JWT
     public function parseToken(string $jwt, ?string $name = null): Token
     {
         $token = (new Parser)->parse($jwt);
-        if($name)
+        $config = $this->getConfig($name);
+        if($config)
         {
-            $config = $this->getConfig($name);
             $signer = $config->getSignerInstance();
             $key = $config->getPublicKey();
             if(!$token->verify($signer, $key))
