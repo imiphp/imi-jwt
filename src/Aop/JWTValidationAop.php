@@ -12,6 +12,7 @@ use Imi\Aop\Annotation\PointCut;
 use Imi\JWT\Annotation\JWTValidation;
 use Imi\Util\Http\Consts\RequestHeader;
 use Imi\Bean\Annotation\AnnotationManager;
+use Imi\JWT\Exception\InvalidTokenException;
 use Imi\JWT\Exception\ConfigNotFoundException;
 use Imi\JWT\Exception\AnnotationNotFoundException;
 use Imi\JWT\Exception\InvalidAuthorizationException;
@@ -67,6 +68,30 @@ class JWTValidationAop
             }
         }
         $token = $jwt->parseToken($jwtStr, $jwtValidation->name ?? $jwt->getDefault());
+
+        // 验证
+        $validationData = new \Lcobucci\JWT\ValidationData;
+        if(false !== $jwtValidation->id)
+        {
+            $validationData->setId($jwtValidation->id ?? $config->getId());
+        }
+        if(false !== $jwtValidation->issuer)
+        {
+            $validationData->setIssuer($jwtValidation->issuer ?? $config->getIssuer());
+        }
+        if(false !== $jwtValidation->audience)
+        {
+            $validationData->setAudience($jwtValidation->audience ?? $config->getAudience());
+        }
+        if(false !== $jwtValidation->subject)
+        {
+            $validationData->setSubject($jwtValidation->subject ?? $config->getSubject());
+        }
+        if(!$token->validate($validationData))
+        {
+            throw new InvalidTokenException;
+        }
+
         if($jwtValidation->tokenParam || $jwtValidation->dataParam)
         {
             $args = ClassObject::convertArgsToKV($class, $joinPoint->getMethod(), $joinPoint->getArgs());

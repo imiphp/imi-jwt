@@ -21,4 +21,16 @@ class A
         return [$token, $data];
     }
 
+    /**
+     * @JWTValidation(name="b", tokenParam="token", dataParam="data")
+     *
+     * @param \Lcobucci\JWT\Token $token
+     * @param \stdClass $data
+     * @return array
+     */
+    public function testFail($token = null, $data = null)
+    {
+        return [$token, $data];
+    }
+
 }
