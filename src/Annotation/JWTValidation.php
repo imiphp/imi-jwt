@@ -26,6 +26,42 @@ class JWTValidation extends Base
     public $name;
 
     /**
+     * 验证 ID
+     * 为 null 则使用配置中的值验证
+     * 为 false 则不验证
+     *
+     * @var string|null|false
+     */
+    public $id;
+
+    /**
+     * 验证发行人
+     * 为 null 则使用配置中的值验证
+     * 为 false 则不验证
+     *
+     * @var string|null|false
+     */
+    public $issuer;
+
+    /**
+     * 验证接收
+     * 为 null 则使用配置中的值验证
+     * 为 false 则不验证
+     *
+     * @var string|null|false
+     */
+    public $audience;
+
+    /**
+     * 验证主题
+     * 为 null 则使用配置中的值验证
+     * 为 false 则不验证
+     *
+     * @var string|null|false
+     */
+    public $subject;
+
+    /**
      * Token 对象注入的参数名称
      *
      * @var string
