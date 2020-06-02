@@ -77,7 +77,8 @@ use \Imi\JWT\Facade\JWT;
 $data = [
     'memberId'  =>  19260817,
 ];
-$token = JWT::getToken($data);
+$token = JWT::getToken($data); // Token 对象
+$tokenContent = $token->__toString(); // Token 字符串
 ```
 
 指定名称：
@@ -88,7 +89,8 @@ use \Imi\JWT\Facade\JWT;
 $data = [
     'memberId'  =>  19260817,
 ];
-$token = JWT::getToken($data, 'a');
+$token = JWT::getToken($data, 'a'); // Token 对象
+$tokenContent = $token->__toString(); // Token 字符串
 ```
 
 自定义处理：
@@ -102,7 +104,8 @@ $data = [
 $token = JWT::getToken($data, 'a', function(\Lcobucci\JWT\Builder $builder){
     // 可以针对该对象做一些操作
     $builder->withClaim('aaa', 'bbb');
-});
+}); // Token 对象
+$tokenContent = $token->__toString(); // Token 字符串
 ```
 
 ### 验证 Token
