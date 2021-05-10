@@ -1,13 +1,14 @@
 <?php
+
 namespace Imi\JWT\Bean;
 
-use Lcobucci\JWT\Token;
-use Imi\JWT\Util\Parser;
-use Imi\JWT\Util\Builder;
-use Imi\JWT\Model\JWTConfig;
 use Imi\Bean\Annotation\Bean;
 use Imi\JWT\Exception\ConfigNotFoundException;
 use Imi\JWT\Exception\InvalidTokenException;
+use Imi\JWT\Model\JWTConfig;
+use Imi\JWT\Util\Builder;
+use Imi\JWT\Util\Parser;
+use Lcobucci\JWT\Token;
 
 /**
  * @Bean("JWT")
@@ -15,33 +16,36 @@ use Imi\JWT\Exception\InvalidTokenException;
 class JWT
 {
     /**
-     * 配置列表
+     * 配置列表.
      *
      * @var array
      */
     protected $list = [];
 
     /**
-     * 默认配置名
+     * 默认配置名.
      *
      * @var string|null
      */
     protected $default;
 
     /**
-     * 处理后的列表
+     * 处理后的列表.
      *
      * @var \Imi\JWT\Model\JWTConfig[]
      */
     private $parsedList = [];
 
+    /**
+     * @return void
+     */
     public function __init()
     {
-        foreach($this->list as $key => $item)
+        foreach ($this->list as $key => $item)
         {
             $this->parsedList[$key] = new JWTConfig($item);
         }
-        if(null === $this->default)
+        if (null === $this->default)
         {
             // 如果没有设置默认配置，默认使用第一个配置
             reset($this->list);
@@ -50,37 +54,39 @@ class JWT
     }
 
     /**
-     * Get 配置列表
+     * Get 配置列表.
      *
      * @return \Imi\JWT\Model\JWTConfig[]
-     */ 
+     */
     public function getList(): array
     {
         return $this->parsedList;
     }
 
     /**
-     * Get 默认配置名
+     * Get 默认配置名.
      *
      * @return string|null
-     */ 
+     */
     public function getDefault(): ?string
     {
         return $this->default;
     }
 
     /**
-     * 获取配置
+     * 获取配置.
      *
      * @param string|null $name
+     *
      * @return \Imi\JWT\Model\JWTConfig|null
      */
     public function getConfig(?string $name = null): ?JWTConfig
     {
-        if(null === $name)
+        if (null === $name)
         {
             $name = $this->getDefault();
         }
+
         return $this->parsedList[$name] ?? null;
     }
 
@@ -88,12 +94,13 @@ class JWT
      * 获取 Token 构建器对象
      *
      * @param string|null $name
-     * @return \Lcobucci\JWT\Builder
+     *
+     * @return Builder
      */
     public function getBuilderInstance(?string $name = null): Builder
     {
         $config = $this->getConfig($name);
-        if(!$config)
+        if (!$config)
         {
             throw new ConfigNotFoundException('Must option the config @app.beans.JWT.list');
         }
@@ -106,17 +113,17 @@ class JWT
                 ->canOnlyBeUsedAfter($config->getNotBefore())
                 ->identifiedBy($config->getId());
         $issuedAt = $config->getIssuedAt();
-        if(true === $issuedAt)
+        if (true === $issuedAt)
         {
             $builder->issuedAt($time);
         }
-        else if(false !== $issuedAt)
+        elseif (false !== $issuedAt)
         {
             $builder->issuedAt($issuedAt);
         }
-        if($headers = $config->getHeaders())
+        if ($headers = $config->getHeaders())
         {
-            foreach($headers as $k => $v)
+            foreach ($headers as $k => $v)
             {
                 $builder->withHeader($k, $v);
             }
@@ -124,50 +131,54 @@ class JWT
         $signer = $config->getSignerInstance();
         $key = $config->getPrivateKey();
         $builder->sign($signer, $key);
+
         return $builder;
     }
 
     /**
-     * 生成 Token
+     * 生成 Token.
      *
-     * @param mixed $data
-     * @param string|null $name
+     * @param mixed         $data
+     * @param string|null   $name
      * @param callable|null $beforeGetToken
+     *
      * @return \Lcobucci\JWT\Token
      */
     public function getToken($data, ?string $name = null, ?callable $beforeGetToken = null): Token
     {
         $builder = $this->getBuilderInstance($name);
-        if($beforeGetToken)
+        if ($beforeGetToken)
         {
             $beforeGetToken($builder);
         }
         $config = $this->getConfig($name);
         $builder->withClaim($config->getDataName(), $data);
+
         return $builder->getToken();
     }
 
     /**
-     * 处理 Token
+     * 处理 Token.
      *
-     * @param string $jwt
+     * @param string      $jwt
      * @param string|null $name
+     *
      * @return \Lcobucci\JWT\Token
      */
     public function parseToken(string $jwt, ?string $name = null): Token
     {
-        $token = (new Parser)->parse($jwt);
+        $token = (new Parser())->parse($jwt);
         $config = $this->getConfig($name);
-        if($config)
+        if ($config)
         {
             $signer = $config->getSignerInstance();
             $key = $config->getPublicKey();
-            if(!$token->verify($signer, $key))
+            if (!$token->verify($signer, $key))
             {
-                throw new InvalidTokenException;
+                throw new InvalidTokenException();
             }
         }
+
         return $token;
     }
-
 }

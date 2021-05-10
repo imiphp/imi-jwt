@@ -1,66 +1,64 @@
 <?php
 
-use Imi\RequestContext;
-
 return [
-    'configs'    =>    [
+    'configs'    => [
     ],
     // bean扫描目录
-    'beanScan'    =>    [
+    'beanScan'    => [
         'Imi\JWT\Test\Test',
     ],
-    'components'    =>  [
+    'components'    => [
         // 引入本组件
-        'jwt'    =>  'Imi\JWT',
+        'jwt'    => 'Imi\JWT',
     ],
-    'ignoreNamespace'   =>  [
+    'ignoreNamespace'   => [
     ],
-    'beans'    =>    [
-        'Logger'            =>  [
-            'exHandlers'    =>  [
+    'beans'    => [
+        'Logger'            => [
+            'exHandlers'    => [
                 [
                     'class'     => \Imi\Log\Handler\Console::class,
                     'options'   => [
                         'levels'        => [
                             'Test',
                         ],
-                        'format'        => '{message}',
-                        'logCacheNumber'=> 10240,
+                        'format'         => '{message}',
+                        'logCacheNumber' => 10240,
                     ],
                 ],
             ],
         ],
-        'JWT'   =>  [
-            'list'  =>  [
-                'a' =>  [
-                    'audience'  =>  'audience_a',
-                    'subject'   =>  'subject_a',
-                    'expires'   =>  86400,
-                    'issuer'    =>  'issuer_a',
-                    'headers'   =>  [
-                        'a' =>  '1',
-                        'b' =>  '2',
+        'JWT'   => [
+            'list'  => [
+                'a' => [
+                    'audience'  => 'audience_a',
+                    'subject'   => 'subject_a',
+                    'expires'   => 86400,
+                    'issuer'    => 'issuer_a',
+                    'headers'   => [
+                        'a' => '1',
+                        'b' => '2',
                     ],
-                    'tokenHandler'  =>  function(){
+                    'tokenHandler'  => function () {
                         return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImEiOiIxIiwiYiI6IjIifQ.eyJhdWQiOiJhdWRpZW5jZV9hIiwic3ViIjoic3ViamVjdF9hIiwiZXhwIjoxODkzMjkxNTE1LCJpc3MiOiJpc3N1ZXJfYSIsIm5iZiI6MCwianRpIjoiIiwiaWF0IjoxNTc3OTMxNTE1LCJkYXRhIjp7Im1lbWJlcklkIjoxOTI2MDgxN319.-tXlyj1BcVD8GJIE2nQdTPULVpZFD0h5BIQdx_X943E';
                     },
-                    'privateKey'    =>  '123456',
-                    'publicKey'     =>  '123456',
+                    'privateKey'    => '123456',
+                    'publicKey'     => '123456',
                 ],
-                'b' =>  [
-                    'audience'  =>  'audience_a',
-                    'subject'   =>  'subject_a',
-                    'expires'   =>  86400,
-                    'issuer'    =>  'issuer_a',
-                    'headers'   =>  [
-                        'a' =>  '1',
-                        'b' =>  '2',
+                'b' => [
+                    'audience'  => 'audience_a',
+                    'subject'   => 'subject_a',
+                    'expires'   => 86400,
+                    'issuer'    => 'issuer_a',
+                    'headers'   => [
+                        'a' => '1',
+                        'b' => '2',
                     ],
-                    'tokenHandler'  =>  function(){
+                    'tokenHandler'  => function () {
                         return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImEiOiIxIiwiYiI6IjIifQ.eyJhdWQiOiJhdWRpZW5jZV9hIiwic3ViIjoic3ViamVjdF9hIiwiZXhwIjotMTM2ODg2NDAwMCwiaXNzIjoiaXNzdWVyX2EiLCJuYmYiOjAsImp0aSI6IiIsImlhdCI6MTU4MTQxMjIwMywiZGF0YSI6eyJtZW1iZXJJZCI6MTkyNjA4MTd9fQ.PAZxqO48qzu_4JBK5jyRK2nJlDNHiLkBqKQ6QLb-Duo';
                     },
-                    'privateKey'    =>  '123456',
-                    'publicKey'     =>  '123456',
+                    'privateKey'    => '123456',
+                    'publicKey'     => '123456',
                 ],
             ],
         ],

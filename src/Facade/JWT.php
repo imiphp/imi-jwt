@@ -1,11 +1,13 @@
 <?php
+
 namespace Imi\JWT\Facade;
 
-use Imi\Facade\BaseFacade;
 use Imi\Facade\Annotation\Facade;
+use Imi\Facade\BaseFacade;
 
 /**
  * @Facade(class="JWT")
+ *
  * @method static mixed __init()
  * @method static \Imi\JWT\Model\JWTConfig[] getList()
  * @method static string|null getDefault()
@@ -17,5 +19,4 @@ use Imi\Facade\Annotation\Facade;
  */
 abstract class JWT extends BaseFacade
 {
-
 }

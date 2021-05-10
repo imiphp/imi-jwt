@@ -1,6 +1,7 @@
 <?php
+
 return [
-    'beanScan'  =>  [
+    'beanScan'  => [
         'Imi\JWT\Annotation',
         'Imi\JWT\Aop',
         'Imi\JWT\Bean',

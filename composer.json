@@ -6,22 +6,16 @@
     "require": {
         "lcobucci/jwt": "3.3.*"
     },
-    "require-dev": {
-        "yurunsoft/imi": "dev-dev",
-        "phpunit/phpunit": "^7"
-    },
+    "require-dev": {},
     "autoload": {
-        "psr-4" : {
-            "Imi\\JWT\\" : "src/"
+        "psr-4": {
+            "Imi\\JWT\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4" : {
-            "Imi\\JWT\\Test\\" : "tests/"
+        "psr-4": {
+            "Imi\\JWT\\Test\\": "tests/"
         }
     },
-    "scripts": {
-      "test": "./tests/run",
-      "install-test": "php --ri swoole && composer install composer test"
-    }
+    "scripts": {}
 }
