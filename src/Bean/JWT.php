@@ -1,5 +1,7 @@
 <?php
 
+# macro
+
 declare(strict_types=1);
 
 namespace Imi\JWT\Bean;
@@ -24,7 +26,7 @@ use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\ValidAt;
 
 /**
- * @Bean("JWT")
+ * @Bean(name="JWT", recursion=false)
  */
 class JWT
 {
@@ -342,6 +344,14 @@ class JWT
 
     public function getJwtPackageVersion(): int
     {
+        # if 0
         return class_exists(\Lcobucci\JWT\Token\Parser::class) ? 4 : 3;
+        # endif
+        # if class_exists(\Lcobucci\JWT\Token\Parser::class)
+        // @phpstan-ignore-next-line
+        return 4;
+        # else
+        return 3;
+        # endif
     }
 }
