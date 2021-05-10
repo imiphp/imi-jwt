@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Imi\JWT\Model;
 
 use Imi\Util\Traits\TDataToProperty;
@@ -14,59 +16,43 @@ class JWTConfig
 
     /**
      * 签名者.
-     *
-     * @var string
      */
-    private $signer = 'Hmac';
+    private string $signer = 'Hmac';
 
     /**
      * 算法.
-     *
-     * @var string
      */
-    private $algo = 'Sha256';
+    private string $algo = 'Sha256';
 
     /**
      * 自定义数据字段名.
-     *
-     * @var string
      */
-    private $dataName = 'data';
+    private string $dataName = 'data';
 
     /**
      * 接收.
-     *
-     * @var string|null
      */
-    private $audience;
+    private ?string $audience = null;
 
     /**
      * 主题.
-     *
-     * @var string|null
      */
-    private $subject;
+    private ?string $subject = null;
 
     /**
      * 超时秒数.
-     *
-     * @var int|null
      */
-    private $expires;
+    private ?int $expires = null;
 
     /**
      * 发行人.
-     *
-     * @var string|null
      */
-    private $issuer;
+    private ?string $issuer = null;
 
     /**
      * 实际日期必须大于等于本值
-     *
-     * @var int
      */
-    private $notBefore = 0;
+    private int $notBefore = 0;
 
     /**
      * JWT 发出时间
@@ -80,43 +66,33 @@ class JWTConfig
 
     /**
      * Token id.
-     *
-     * @var string|null
      */
-    private $id;
+    private ?string $id = null;
 
     /**
      * 头.
-     *
-     * @var array
      */
-    private $headers = [];
+    private array $headers = [];
 
     /**
      * 自定义获取 token 回调.
      *
      * @var callable|null
      */
-    private $tokenHandler;
+    private $tokenHandler = null;
 
     /**
      * 私钥.
-     *
-     * @var string
      */
-    private $privateKey;
+    private string $privateKey = '';
 
     /**
      * 公钥.
-     *
-     * @var string
      */
-    private $publicKey;
+    private string $publicKey = '';
 
     /**
      * Get 签名者.
-     *
-     * @return string
      */
     public function getSigner(): string
     {
@@ -125,8 +101,6 @@ class JWTConfig
 
     /**
      * Get 算法.
-     *
-     * @return string
      */
     public function getAlgo(): string
     {
@@ -135,8 +109,6 @@ class JWTConfig
 
     /**
      * Get 超时秒数.
-     *
-     * @return int|null
      */
     public function getExpires(): ?int
     {
@@ -145,8 +117,6 @@ class JWTConfig
 
     /**
      * Get 发行人.
-     *
-     * @return string|null
      */
     public function getIssuer(): ?string
     {
@@ -155,8 +125,6 @@ class JWTConfig
 
     /**
      * Get 头.
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
@@ -165,8 +133,6 @@ class JWTConfig
 
     /**
      * Get 自定义获取 token 回调.
-     *
-     * @return callable|null
      */
     public function getTokenHandler(): ?callable
     {
@@ -175,8 +141,6 @@ class JWTConfig
 
     /**
      * Get 私钥.
-     *
-     * @return string|null
      */
     public function getPrivateKey(): ?string
     {
@@ -185,8 +149,6 @@ class JWTConfig
 
     /**
      * Get 公钥.
-     *
-     * @return string|null
      */
     public function getPublicKey(): ?string
     {
@@ -195,8 +157,6 @@ class JWTConfig
 
     /**
      * Get 接收.
-     *
-     * @return string|null
      */
     public function getAudience(): ?string
     {
@@ -205,8 +165,6 @@ class JWTConfig
 
     /**
      * Get 主题.
-     *
-     * @return string|null
      */
     public function getSubject(): ?string
     {
@@ -235,8 +193,6 @@ class JWTConfig
 
     /**
      * Get 自定义数据字段名.
-     *
-     * @return string
      */
     public function getDataName(): string
     {
@@ -245,8 +201,6 @@ class JWTConfig
 
     /**
      * Get 实际日期必须大于等于本值
-     *
-     * @return int
      */
     public function getNotBefore(): int
     {
@@ -255,8 +209,6 @@ class JWTConfig
 
     /**
      * 获取签名者对象
-     *
-     * @return \Lcobucci\JWT\Signer
      */
     public function getSignerInstance(): Signer
     {

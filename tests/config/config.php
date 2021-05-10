@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'configs'    => [
     ],
     // bean扫描目录
-    'beanScan'    => [
-        'Imi\JWT\Test\Test',
-    ],
+    // 'beanScan'    => [
+    //     'Imi\JWT\Test\Test',
+    // ],
     'components'    => [
         // 引入本组件
         'jwt'    => 'Imi\JWT',
@@ -14,20 +16,6 @@ return [
     'ignoreNamespace'   => [
     ],
     'beans'    => [
-        'Logger'            => [
-            'exHandlers'    => [
-                [
-                    'class'     => \Imi\Log\Handler\Console::class,
-                    'options'   => [
-                        'levels'        => [
-                            'Test',
-                        ],
-                        'format'         => '{message}',
-                        'logCacheNumber' => 10240,
-                    ],
-                ],
-            ],
-        ],
         'JWT'   => [
             'list'  => [
                 'a' => [

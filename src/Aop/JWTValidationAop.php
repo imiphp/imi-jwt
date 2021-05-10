@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Imi\JWT\Aop;
 
 use Imi\Aop\Annotation\Around;
@@ -122,7 +124,7 @@ class JWTValidationAop
         else
         {
             $config = $jwt->getConfig($jwtValidation->name);
-            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey()), InMemory::plainText($config->getPublicKey()));
+            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey() ?? ''), InMemory::plainText($config->getPublicKey() ?? ''));
             $constraints = [];
             if (false !== $jwtValidation->id && null !== ($id = ($jwtValidation->id ?? $config->getId())))
             {

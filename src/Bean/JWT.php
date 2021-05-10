@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Imi\JWT\Bean;
 
 use Imi\Bean\Annotation\Bean;
@@ -20,29 +22,22 @@ class JWT
 {
     /**
      * 配置列表.
-     *
-     * @var array
      */
-    protected $list = [];
+    protected array $list = [];
 
     /**
      * 默认配置名.
-     *
-     * @var string|null
      */
-    protected $default;
+    protected ?string $default = null;
 
     /**
      * 处理后的列表.
      *
      * @var \Imi\JWT\Model\JWTConfig[]
      */
-    private $parsedList = [];
+    private array $parsedList = [];
 
-    /**
-     * @return void
-     */
-    public function __init()
+    public function __init(): void
     {
         foreach ($this->list as $key => $item)
         {
@@ -68,8 +63,6 @@ class JWT
 
     /**
      * Get 默认配置名.
-     *
-     * @return string|null
      */
     public function getDefault(): ?string
     {
@@ -78,10 +71,6 @@ class JWT
 
     /**
      * 获取配置.
-     *
-     * @param string|null $name
-     *
-     * @return \Imi\JWT\Model\JWTConfig|null
      */
     public function getConfig(?string $name = null): ?JWTConfig
     {
@@ -95,10 +84,6 @@ class JWT
 
     /**
      * 获取 Token 构建器对象
-     *
-     * @param string|null $name
-     *
-     * @return Builder
      */
     public function getBuilderInstance(?string $name = null): Builder
     {
@@ -139,14 +124,14 @@ class JWT
         }
         else
         {
-            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey()), InMemory::plainText($config->getPublicKey()));
+            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey() ?? ''), InMemory::plainText($config->getPublicKey() ?? ''));
             $builder = $configuration->builder();
 
             $now = new \DateTimeImmutable();
-            $builder->permittedFor($config->getAudience())
-                ->relatedTo($config->getSubject())
+            $builder->permittedFor($config->getAudience() ?? '')
+                ->relatedTo($config->getSubject() ?? '')
                 ->expiresAt($now->modify('+' . ($config->getExpires() ?? 0) . ' second'))
-                ->issuedBy($config->getIssuer())
+                ->issuedBy($config->getIssuer() ?? '')
                 ->canOnlyBeUsedAfter($now->modify('+' . $config->getNotBefore() . ' second'))
                 ->identifiedBy($config->getId() ?? '');
             $issuedAt = $config->getIssuedAt();
@@ -179,7 +164,7 @@ class JWT
         else
         {
             $config = $this->getConfig($name);
-            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey()), InMemory::plainText($config->getPublicKey()));
+            $configuration = Configuration::forAsymmetricSigner($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey() ?? ''), InMemory::plainText($config->getPublicKey() ?? ''));
 
             return $configuration->parser();
         }
@@ -188,11 +173,7 @@ class JWT
     /**
      * 生成 Token.
      *
-     * @param mixed         $data
-     * @param string|null   $name
-     * @param callable|null $beforeGetToken
-     *
-     * @return \Lcobucci\JWT\Token|\Lcobucci\JWT\UnencryptedToken
+     * @param mixed $data
      */
     public function getToken($data, ?string $name = null, ?callable $beforeGetToken = null): Token
     {
@@ -210,17 +191,12 @@ class JWT
         }
         else
         {
-            return $builder->getToken($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey()));
+            return $builder->getToken($config->getSignerInstance(), InMemory::plainText($config->getPrivateKey() ?? ''));
         }
     }
 
     /**
      * 处理 Token.
-     *
-     * @param string      $jwt
-     * @param string|null $name
-     *
-     * @return \Lcobucci\JWT\Token|\Lcobucci\JWT\UnencryptedToken
      */
     public function parseToken(string $jwt, ?string $name = null): Token
     {
@@ -244,7 +220,7 @@ class JWT
             $parser = $this->getParserInstance($name);
             $token = $parser->parse($jwt);
             $signer = $config->getSignerInstance();
-            $key = $config->getPublicKey();
+            $key = $config->getPublicKey() ?? '';
             $signedWith = new SignedWith($signer, InMemory::plainText($key));
             try
             {
