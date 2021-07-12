@@ -1,8 +1,9 @@
 <?php
+
 namespace Imi\JWT\Exception;
 
 /**
- * Token 验证失败
+ * Token 验证失败.
  */
 class InvalidTokenException extends \Exception
 {
@@ -10,5 +11,4 @@ class InvalidTokenException extends \Exception
     {
         parent::__construct($message, $code, $previous);
     }
-
 }

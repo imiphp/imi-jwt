@@ -1,11 +1,13 @@
 <?php
+
 namespace Imi\JWT\Annotation;
 
 use Imi\Bean\Annotation\Base;
 use Imi\Bean\Annotation\Parser;
 
 /**
- * JWT 验证注解
+ * JWT 验证注解.
+ *
  * @Annotation
  * @Target("METHOD")
  * @Parser("Imi\Aop\Parser\AopParser")
@@ -13,13 +15,14 @@ use Imi\Bean\Annotation\Parser;
 class JWTValidation extends Base
 {
     /**
-     * 只传一个参数时的参数名
+     * 只传一个参数时的参数名.
+     *
      * @var string
      */
     protected $defaultFieldName = 'name';
 
     /**
-     * JWT 配置名称
+     * JWT 配置名称.
      *
      * @var string
      */
@@ -30,7 +33,7 @@ class JWTValidation extends Base
      * 为 null 则使用配置中的值验证
      * 为 false 则不验证
      *
-     * @var string|null|false
+     * @var string|false|null
      */
     public $id;
 
@@ -39,7 +42,7 @@ class JWTValidation extends Base
      * 为 null 则使用配置中的值验证
      * 为 false 则不验证
      *
-     * @var string|null|false
+     * @var string|false|null
      */
     public $issuer;
 
@@ -48,7 +51,7 @@ class JWTValidation extends Base
      * 为 null 则使用配置中的值验证
      * 为 false 则不验证
      *
-     * @var string|null|false
+     * @var string|false|null
      */
     public $audience;
 
@@ -57,22 +60,21 @@ class JWTValidation extends Base
      * 为 null 则使用配置中的值验证
      * 为 false 则不验证
      *
-     * @var string|null|false
+     * @var string|false|null
      */
     public $subject;
 
     /**
-     * Token 对象注入的参数名称
+     * Token 对象注入的参数名称.
      *
      * @var string
      */
     public $tokenParam;
 
     /**
-     * 数据注入的参数名称
+     * 数据注入的参数名称.
      *
      * @var string
      */
     public $dataParam;
-
 }

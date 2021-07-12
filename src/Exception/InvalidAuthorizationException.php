@@ -1,4 +1,5 @@
 <?php
+
 namespace Imi\JWT\Exception;
 
 /**
@@ -6,5 +7,4 @@ namespace Imi\JWT\Exception;
  */
 class InvalidAuthorizationException extends \Exception
 {
-
 }
